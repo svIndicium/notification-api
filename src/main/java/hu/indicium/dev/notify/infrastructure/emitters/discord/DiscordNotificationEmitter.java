@@ -8,11 +8,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
 @Slf4j
 public class DiscordNotificationEmitter implements NotificationEmitter {
     @Override
