@@ -1,5 +1,6 @@
 package hu.indicium.dev.notify.infrastructure.emitters.discord;
 
+import hu.indicium.dev.notify.domain.model.EmitException;
 import hu.indicium.dev.notify.domain.model.Notification;
 import hu.indicium.dev.notify.domain.model.NotificationEmitter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +15,7 @@ import java.io.IOException;
 @Slf4j
 public class DiscordNotificationEmitter implements NotificationEmitter {
     @Override
-    public void emit(Notification notification) {
+    public void emit(Notification notification) throws EmitException {
         String webhookUrl = System.getenv("DISCORD_WEBHOOK_URL");
 
         HttpClient httpClient = HttpClientBuilder.create().build();
@@ -28,6 +29,7 @@ public class DiscordNotificationEmitter implements NotificationEmitter {
             response = httpClient.execute(request);
         } catch (IOException ex) {
             log.error(ex.getMessage());
+            throw new DiscordEmitException(ex.getMessage());
         }
     }
 }
